@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<modDesc descVersion="96">
+    <author>Temmmych</author>
+    <version>0.0.0.3</version>
+	
+    <title>
+        <en>Production Control</en>
+		<de>Production Control</de>
+		<fr>Production Control</fr>
+		<es>Production Control</es>
+		<ru>Production Control</ru>
+    </title>
+
+    <description>
+        <en><![CDATA[Full control over your productions.
+Now your factories can operate in three 8-hour shifts.
+
+- Set speed for each product line (50%-300%)
+- Costs scale proportionally with production speed
+- In multiplayer, production controls are available to the farm manager
+- Compatible with singleplayer and multiplayer]]></en>
+        <de><![CDATA[Volle Kontrolle über Ihre Produktionen.
+Jetzt mit Dreischichtbetrieb (3x8 Stunden).
+
+- Geschwindigkeit pro Produkt (50%-300%)
+- Die Betriebskosten skalieren mit der Produktionsrate
+- Farmmanager können im Multiplayer auf diese Einstellungen zugreifen
+- Funktioniert im Einzelspieler und Mehrspieler]]></de>
+        <fr><![CDATA[Contrôle total de vos productions.
+Fonctionne en 3 équipes de 8 heures.
+
+- Vitesse par produit (50%-300%)
+- Les coûts augmentent proportionnellement à la vitesse de production
+- Le gestionnaire de ferme peut modifier ces paramètres en multijoueur
+- Compatible en solo et multijoueur]]></fr>
+        <es><![CDATA[Control total de tus producciones.
+Ahora con turnos de 8 horas (3 turnos).
+
+- Velocidad por producto (50%-300%)
+- Costos escalan con la velocidad de producción
+- El administrador gestiona estas opciones en multijugador
+- Funciona en solo y multijugador]]></es>
+        <ru><![CDATA[Полный контроль над производствами.
+Теперь ваши производства могут работать в три смены по 8 часов.
+ 
+- Настройка скорости производства для каждого продукта (50% - 300%)
+- Затраты растут пропорционально скорости производства
+- В многопользовательском режиме функция доступна управляещему фермой
+- Поддерживает многопользовательский и одиночной режимы]]></ru>
+	</description>
+
+    <multiplayer supported="true" />
+    <iconFilename>icon.dds</iconFilename>
+
+    <l10n>
+		<text name="productivity_button_lable">
+			<en>Productivity</en>
+			<de>Produktivität</de>
+			<fr>Rendement</fr>
+			<es>Productividad</es>
+			<ru>Производительность</ru>
+        </text>
+		<text name="productivity_warning_bable">
+			<en>Higher productivity increases operating costs.</en>
+			<de>Steigende Produktivität führt zu höheren Betriebskosten.</de>
+			<fr>Un rendement plus élevé augmente les coûts d'exploitation.</fr>
+			<es>Mayor productividad = mayores costes operativos.</es>
+			<ru>При увеличении производительности вырастут затраты на обслуживание производства.</ru>
+        </text>
+		<text name="productivity_change_bable">
+			<en>Production Rate Settings</en>
+			<de>Leistungssteuerung</de>
+			<fr>Ajustement du rendement</fr>
+			<es>Configurar producción</es>
+			<ru>Изменение производительности</ru>
+		</text>
+    </l10n>
+	
+	<extraSourceFiles>
+        <sourceFile filename="scripts/ProductionControlLoader.lua" />
+    </extraSourceFiles>
+</modDesc>
