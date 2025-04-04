@@ -50,3 +50,5 @@ As long as you:
 Project link: [https://github.com/Temmmych/FS25_ProductionControl](https://github.com/Temmmych/FS25_ProductionControl)
 
 © 2025 [Temmmych](https://github.com/Temmmych)
+
+<meta name="google-site-verification" content="6C36-1r-y7DO8GQRLHjHkmFTbf2EqMmtXZL3Eaqxq3I" />
