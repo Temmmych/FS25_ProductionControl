@@ -1,7 +1,6 @@
 --[[
 -- @Name: Production Control
 -- @Version: 1.0.0.0
--- @Date: 02.04.2025
 -- @Author: Temmmych
 -- @Contacts: https://github.com/Temmmych/FS25_ProductionControl
 --]]
@@ -51,15 +50,18 @@ function ProductionControl.CalculateAllPerMonth(production)
     if debug > 0 then print("-- ProductionControl.CalculateAllPerMonth()") end
     if production[PCP .. "productivity"] > ProductionControl.productivityOptions[#ProductionControl.productivityOptions] 
         or production[PCP .. "productivity"] < ProductionControl.productivityOptions[1] then production[PCP .. "productivity"] = 100 end
+    local daysPerPeriod = 1
+    if g_currentMission.environment ~= nil and g_currentMission.environment.daysPerPeriod ~= nil then
+        daysPerPeriod = g_currentMission.environment.daysPerPeriod
+    end
     production.cyclesPerMonth = production.cyclesPerMonth * (production[PCP .. "productivity"] / 100)
-    production.cyclesPerHour = production.cyclesPerMonth / 24
+    production.cyclesPerHour = production.cyclesPerMonth / (24 * daysPerPeriod)
     production.cyclesPerMinute = production.cyclesPerHour / 60
     production.costsPerActiveMonth = production.costsPerActiveMonth * (production[PCP .. "productivity"] / 100)
-    production.costsPerActiveHour = production.costsPerActiveMonth / 24
+    production.costsPerActiveHour = production.costsPerActiveMonth / (24 * daysPerPeriod)
     production.costsPerActiveMinute = production.costsPerActiveHour / 60
     if debug > 0 then print("// ProductionControl.CalculateAllPerMonth()") end
 end
-
 
 function ProductionControl:productionPointRegister()
     if debug > 0 then print("-- ProductionControl:productionPointRegister()") end
@@ -121,8 +123,9 @@ function ProductionControl:updateMenuButtons(superFunc)
     if debug > 2 then print("-- ProductionControl:updateMenuButtons()") end
     local production, productionPoint = self:getSelectedProduction()
     local ownerFarmId = (productionPoint and productionPoint.ownerFarmId) or 0
+    ProductionControl.productionFrame = self
     if ownerFarmId ~= 0 
-        and ownerFarmId == g_currentMission:getFarmId() 
+        and ownerFarmId == g_currentMission:getFarmId()
         and g_currentMission:getHasPlayerPermission(Farm.PERMISSION.EDIT_FARM, g_currentMission.player) then
         local focusedElement = FocusManager:getFocusedElement()
         if focusedElement ~= nil and focusedElement.endClipperElementName == "endClipperProducts" then
@@ -149,10 +152,24 @@ function ProductionControl:updateMenuButtons(superFunc)
                     target = self,
                     args = {production},
                     callback = function(target, selectedOption, a)
-                        if type(selectedOption) ~= "number" or selectedOption == 0 then
-                            return
+                        if type(selectedOption) ~= "number" or selectedOption == 0 then return end
+                        ProductionControl:RecalculateProductionPoint(productionPoint[PCP .. "uniqueId"], a[1], selectedOption)
+                        if self.updateProductionLists ~= nil then
+                            self.timeSinceLastStateUpdate = math.huge
+                            local success, err = pcall(function()
+                                self:updateProductionLists()
+                            end)
+
+                            if not success then
+                                Timer.new(200, function()
+                                    if self.updateProductionLists then
+                                        self.timeSinceLastStateUpdate = math.huge
+                                        self:updateProductionLists()
+                                    end
+                                end):start()
+                                
+                            end
                         end
-                        ProductionControl:RecalculateProductionPoint(productionPoint[PCP .. "uniqueId"], a[1], selectedOption) 
                     end,
                 }
 
@@ -178,7 +195,7 @@ function ProductionControl:updateMenuButtons(superFunc)
             })
         end
 
-    self:setMenuButtonInfoDirty()     
+        self:setMenuButtonInfoDirty()
     end
     
     if debug > 2 then print("// ProductionControl:updateMenuButtons()") end

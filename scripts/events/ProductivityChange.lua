@@ -1,7 +1,6 @@
 --[[
 -- @Name: Production Control
 -- @Version: 1.0.0.0
--- @Date: 02.04.2025
 -- @Author: Temmmych
 -- @Contacts: https://github.com/Temmmych/FS25_ProductionControl
 --]]
