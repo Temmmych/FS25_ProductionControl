@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="96">
     <author>Temmmych</author>
-    <version>0.0.0.3</version>
+    <version>0.0.0.4</version>
 	
     <title>
         <en>Production Control</en>
@@ -77,6 +77,8 @@ Ahora con turnos de 8 horas (3 turnos).
     </l10n>
 	
 	<extraSourceFiles>
-        <sourceFile filename="scripts/ProductionControlLoader.lua" />
+        <sourceFile filename="scripts/events/ProductivityChangeRequest.lua" />
+		<sourceFile filename="scripts/events/ProductivityChange.lua" />
+		<sourceFile filename="scripts/ProductionControl.lua" />
     </extraSourceFiles>
 </modDesc>
