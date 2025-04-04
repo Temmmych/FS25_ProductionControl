@@ -1,6 +1,6 @@
 # FS25 Production Control
 
-A script mod for **Farming Simulator 25** that enhances control over production chains.
+A script mod for **Farming Simulator 25** that enhances control over production chains.<br />
 Now your factories can operate in three 8-hour shifts.
 
 ## 📦 Features
