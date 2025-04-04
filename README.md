@@ -16,6 +16,12 @@ Now your factories can operate in three 8-hour shifts.
 2. Place the `.zip` file into your `Documents/My Games/FarmingSimulator2025/mods` folder.
 3. Enable the mod in the game.
 
+## 🖼️ Screenshots
+![Production Control](_screenshots/1.png)<br /><br />
+![Production Control](_screenshots/2.png)<br /><br />
+![Production Control](_screenshots/3.png)<br /><br />
+![Production Control](_screenshots/4.png)<br /><br />
+
 ## 🛠 Development & Debugging
 
 - Written in **Lua**
