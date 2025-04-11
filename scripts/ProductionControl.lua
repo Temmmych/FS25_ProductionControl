@@ -10,7 +10,7 @@ local modDirectory = g_currentModDirectory
 local version = g_modManager:getModByName(modName).version
 local fileSettingsName = "ProductionControlSettings.xml"
 local PCP = "productionControlSelfSpec_"
-local debug = 1
+local debug = 0
 
 ProductionControl = {}
 ProductionControl._productionPoints = {}
@@ -42,7 +42,6 @@ function ProductionControl.GetProductionProductivityFromSaveData(uniqueId, id)
         end
     end
 
-    if debug > 0 then print("// ProductionControl.GetProductionProductivityFromSaveData()") end
     return nil
 end
 
@@ -60,7 +59,6 @@ function ProductionControl.CalculateAllPerMonth(production)
     production.costsPerActiveMonth = production.costsPerActiveMonth * (production[PCP .. "productivity"] / 100)
     production.costsPerActiveHour = production.costsPerActiveMonth / (24 * daysPerPeriod)
     production.costsPerActiveMinute = production.costsPerActiveHour / 60
-    if debug > 0 then print("// ProductionControl.CalculateAllPerMonth()") end
 end
 
 function ProductionControl:productionPointRegister()
@@ -76,7 +74,6 @@ function ProductionControl:productionPointRegister()
             end
         end
     end
-    if debug > 1 then print("// ProductionControl:productionPointRegister()") end
 end
 
 function ProductionControl.RecalculateProductionPointFromOnServer(__uniqueId, productionId, productivity)
@@ -92,7 +89,7 @@ function ProductionControl.RecalculateProductionPointFromOnServer(__uniqueId, pr
                         production[PCP .. "productivity"] = productivity
                         ProductionControl.CalculateAllPerMonth(production)
                         if g_server ~= nil then
-                            ProductivityChange.sendEvent(__uniqueId, productionId, productivity)
+                            ProductivityUpdate.sendEvent(__uniqueId, productionId, productivity)
                         end
                         return true
                     end
@@ -114,9 +111,8 @@ function ProductionControl:RecalculateProductionPoint(__uniqueId, production, pr
     ProductionControl.CalculateAllPerMonth(production)
     if g_client and g_currentMission.missionDynamicInfo 
         and g_currentMission.missionDynamicInfo.isMultiplayer then
-        ProductivityChangeRequest.sendEvent(__uniqueId, production.id, production[PCP .. "productivity"])
+            ProductivityRequest.sendEvent(__uniqueId, production.id, production[PCP .. "productivity"])
     end
-    if debug > 0 then print("// ProductionControl:RecalculateProductionPoint()") end
 end
 
 function ProductionControl:updateMenuButtons(superFunc)
@@ -132,7 +128,7 @@ function ProductionControl:updateMenuButtons(superFunc)
             local productionPointId = productionPoint.id
             table.insert(self.menuButtonInfo, {
             inputAction = InputAction.MENU_EXTRA_1,
-            text = g_i18n:getText("productivity_button_lable") .. " " .. production[PCP .. "productivity"] .. "%",
+            text = g_i18n:getText("productivity_button_label") .. " " .. production[PCP .. "productivity"] .. "%",
             callback = function()
 
                 local diagOptionsSelected = 3
@@ -145,8 +141,8 @@ function ProductionControl:updateMenuButtons(superFunc)
                 end
 
                 local dialogArguments = {
-                    title = g_i18n:getText("productivity_change_bable") .. "\r\n" .. production.name,
-                    text = "\r\n\r\n" .. g_i18n:getText("productivity_warning_bable"),
+                    title = production.name,
+                    text = "\r\n" .. g_i18n:getText("productivity_warning_label"),
                     options = diagOptions,
                     defaultOption = diagOptionsSelected,
                     target = self,
@@ -154,16 +150,15 @@ function ProductionControl:updateMenuButtons(superFunc)
                     callback = function(target, selectedOption, a)
                         if type(selectedOption) ~= "number" or selectedOption == 0 then return end
                         ProductionControl:RecalculateProductionPoint(productionPoint[PCP .. "uniqueId"], a[1], selectedOption)
+                        self.timeSinceLastStateUpdate = 11000
                         if self.updateProductionLists ~= nil then
-                            self.timeSinceLastStateUpdate = math.huge
                             local success, err = pcall(function()
                                 self:updateProductionLists()
                             end)
 
                             if not success then
                                 Timer.new(200, function()
-                                    if self.updateProductionLists then
-                                        self.timeSinceLastStateUpdate = math.huge
+                                    if self.updateProductionLists ~= nil then
                                         self:updateProductionLists()
                                     end
                                 end):start()
@@ -197,8 +192,6 @@ function ProductionControl:updateMenuButtons(superFunc)
 
         self:setMenuButtonInfoDirty()
     end
-    
-    if debug > 2 then print("// ProductionControl:updateMenuButtons()") end
 end
 
 function ProductionControl:updateProductionLists()
@@ -213,7 +206,6 @@ function ProductionControl:updateProductionLists()
             end
         end
     end
-    if debug > 1 then print("// InGameMenuProductionFrame:updateProductionLists()") end
 end
 
 function ProductionControl:writeStream(streamId, connection)
@@ -222,12 +214,10 @@ function ProductionControl:writeStream(streamId, connection)
     streamWriteInt32(streamId, #self.productions)
     for _, prod in ipairs(self.productions) do
         streamWriteString(streamId, prod.id)
-        streamWriteInt32(streamId, prod.status)
         streamWriteInt32(streamId, prod[PCP .. "productivity"])
         streamWriteInt32(streamId, prod[PCP .. "baseCyclesPerMonth"])
         streamWriteInt32(streamId, prod[PCP .. "baseCostsPerActiveMonth"])
     end
-    if debug > 0 then print("// ProducntionControl:writeStream()") end
 end
 
 function ProductionControl:readStream(streamId, connection)
@@ -236,13 +226,11 @@ function ProductionControl:readStream(streamId, connection)
     local count = streamReadInt32(streamId)
     for i = 1, count do
         local id = streamReadString(streamId)
-        local status = streamReadInt32(streamId)
         local productivity = streamReadInt32(streamId)
         local __baseCyclesPerMonth = streamReadInt32(streamId)
         local __baseCostsPerActiveMonth = streamReadInt32(streamId)
         for i = 1, #self.productions do
             if self.productions[i].id == id then
-                self.productions[i].status = status
                 self.productions[i][PCP .. "productivity"] = productivity
                 self.productions[i].cyclesPerMonth = __baseCyclesPerMonth
                 self.productions[i].costsPerActiveMonth = __baseCostsPerActiveMonth
@@ -250,7 +238,6 @@ function ProductionControl:readStream(streamId, connection)
             end
         end
     end
-    if debug > 0 then print("// ProducntionControl:readStream(streamId, connection)") end
 end
 
 function ProductionControl:productionPointSaveToXMLFile(xmlFile, key, usedModNames)
@@ -264,7 +251,6 @@ function ProductionControl:productionPointSaveToXMLFile(xmlFile, key, usedModNam
     end
 
     table.insert(ProductionControl._productions, _products)
-    if debug > 0 then print("// ProductionControl:productionPointSaveToXMLFile()") end
 end
 
 function ProductionControl.SaveSettings()
@@ -290,7 +276,6 @@ function ProductionControl.SaveSettings()
     file:write(xmlContent)
     file:close()
     ProductionControl._productions = {}
-    if debug > 0 then  print("// ProductionControl.saveSettings()") end
 end
 
 function ProductionControl:LoadSettings()
@@ -336,7 +321,6 @@ function ProductionControl:LoadSettings()
 
         delete(xmlFile)
     end
-    if debug > 0 then print("// ProductionControl:loadSettings()") end
 end
 
 function ProductionControl.init()

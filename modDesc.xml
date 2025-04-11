@@ -1,84 +1,105 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="96">
     <author>Temmmych</author>
-    <version>0.0.0.6</version>
+    <version>1.0.0.0</version>
 	
     <title>
         <en>Production Control</en>
-		<de>Production Control</de>
-		<fr>Production Control</fr>
-		<es>Production Control</es>
-		<ru>Production Control</ru>
     </title>
 
     <description>
-        <en><![CDATA[Full control over your productions.
-Now your factories can operate in three 8-hour shifts.
+        <en><![CDATA[Control production speed — from 50% to 300%.
+This mod allows you to increase or decrease the speed of any production. The maximum boost simulates three 8-hour work shifts.
 
-- Set speed for each product line (50%-300%)
-- Costs scale proportionally with production speed
-- In multiplayer, production controls are available to the farm manager
-- Compatible with singleplayer and multiplayer]]></en>
-        <de><![CDATA[Volle Kontrolle über Ihre Produktionen.
-Jetzt mit Dreischichtbetrieb (3x8 Stunden).
+- Adjustable speed from 50% to 300%
+- Higher speed increases daily maintenance costs
+- Supports singleplayer and multiplayer
+- In multiplayer, only the farm manager can change the production speed
 
-- Geschwindigkeit pro Produkt (50%-300%)
-- Die Betriebskosten skalieren mit der Produktionsrate
-- Farmmanager können im Multiplayer auf diese Einstellungen zugreifen
-- Funktioniert im Einzelspieler und Mehrspieler]]></de>
-        <fr><![CDATA[Contrôle total de vos productions.
-Fonctionne en 3 équipes de 8 heures.
+Optimize your production to suit your gameplay!]]></en>
+        <de><![CDATA[Steuern Sie die Produktionsgeschwindigkeit — von 50 % bis 300 %.
+Mit diesem Mod können Sie die Geschwindigkeit jeder Produktion erhöhen oder verringern. Die maximale Beschleunigung entspricht drei 8-Stunden-Schichten.
 
-- Vitesse par produit (50%-300%)
-- Les coûts augmentent proportionnellement à la vitesse de production
-- Le gestionnaire de ferme peut modifier ces paramètres en multijoueur
-- Compatible en solo et multijoueur]]></fr>
-        <es><![CDATA[Control total de tus producciones.
-Ahora con turnos de 8 horas (3 turnos).
+- Einstellbare Geschwindigkeit von 50 % bis 300 %
+- Höhere Geschwindigkeit erhöht die täglichen Wartungskosten
+- Unterstützt Einzelspieler- und Mehrspielermodus
+- Im Mehrspielermodus kann nur der Farm-Manager die Produktionsgeschwindigkeit ändern
 
-- Velocidad por producto (50%-300%)
-- Costos escalan con la velocidad de producción
-- El administrador gestiona estas opciones en multijugador
-- Funciona en solo y multijugador]]></es>
-        <ru><![CDATA[Полный контроль над производствами.
-Теперь ваши производства могут работать в три смены по 8 часов.
- 
-- Настройка скорости производства для каждого продукта (50% - 300%)
-- Затраты растут пропорционально скорости производства
-- В многопользовательском режиме функция доступна управляещему фермой
-- Поддерживает многопользовательский и одиночной режимы]]></ru>
-	</description>
+Passen Sie Ihre Produktion Ihrem Spielstil an!]]></de>
+        <fr><![CDATA[Contrôlez la vitesse de production — de 50 % à 300 %.
+Ce mod permet d’augmenter ou de réduire la vitesse de n’importe quelle production. L’accélération maximale correspond à trois équipes de 8 heures.
+
+- Vitesse réglable de 50 % à 300 %
+- Une vitesse plus élevée augmente les coûts d’entretien quotidiens
+- Compatible avec les modes solo et multijoueur
+- En multijoueur, seul le gestionnaire de ferme peut modifier la vitesse de production
+
+Adaptez vos chaînes de production à vos besoins !]]></fr>
+        <es><![CDATA[Controla la velocidad de producción — del 50 % al 300 %.
+Este mod te permite aumentar o disminuir la velocidad de cualquier instalación de producción. El aumento máximo equivale a tres turnos de 8 horas.
+
+- Velocidad ajustable del 50 % al 300 %
+- Mayor velocidad aumenta los costes diarios de mantenimiento
+- Compatible con los modos un jugador y multijugador
+- En multijugador, solo el administrador de la granja puede modificar la velocidad de producción
+
+¡Adapta la producción a tu estilo de juego!]]></es>
+        <ru><![CDATA[Управляйте скоростью производств — от 50% до 300%.
+С помощью этого мода вы можете увеличивать или уменьшать скорость работы любого производства. Максимальное ускорение эквивалентно трём сменам по 8 часов.
+
+- Настройка скорости от 50% до 300%
+- Повышение скорости увеличивает ежедневные затраты на обслуживание
+- Поддержка одиночной игры и мультиплеера
+- В мультиплеере изменять производительность может только управляющий фермой
+
+Настройте производственные процессы под свои задачи!]]></ru>
+        <it><![CDATA[Controlla la velocità di produzione — dal 50% al 300%.
+Questo mod consente di aumentare o ridurre la velocità di qualsiasi produzione. L'accelerazione massima simula tre turni di lavoro da 8 ore.
+
+- Velocità regolabile dal 50% al 300%
+- Maggiore velocità = maggiori costi di manutenzione
+- Compatibile con giocatore singolo e multiplayer
+- In multiplayer, solo il gestore della fattoria può modificare la velocità di produzione
+
+Adatta la produzione al tuo stile di gioco!]]></it>
+        <pl><![CDATA[Kontroluj prędkość produkcji — od 50% do 300%.
+Ten mod pozwala zwiększyć lub zmniejszyć szybkość dowolnej produkcji. Maksymalne przyspieszenie odpowiada trzem 8-godzinnym zmianom.
+
+- Regulowana prędkość od 50% do 300%
+- Wyższa prędkość zwiększa dzienne koszty utrzymania
+- Obsługuje tryb jednoosobowy i wieloosobowy
+- W trybie wieloosobowym tylko kierownik farmy może zmieniać prędkość produkcji
+
+Dostosuj produkcję do swojego stylu gry!]]></pl>
+    </description>
 
     <multiplayer supported="true" />
-    <iconFilename>icon.dds</iconFilename>
+    <iconFilename>icon_production_control.dds</iconFilename>
 
     <l10n>
-		<text name="productivity_button_lable">
-			<en>Productivity</en>
-			<de>Produktivität</de>
-			<fr>Rendement</fr>
-			<es>Productividad</es>
-			<ru>Производительность</ru>
+        <text name="productivity_button_label">
+            <en>Productivity</en>
+            <de>Produktivität</de>
+            <fr>Rendement</fr>
+            <es>Productividad</es>
+            <ru>Производительность</ru>
+            <it>Produttività</it>
+            <pl>Wydajność</pl>
         </text>
-		<text name="productivity_warning_bable">
-			<en>Higher productivity increases operating costs.</en>
-			<de>Steigende Produktivität führt zu höheren Betriebskosten.</de>
-			<fr>Un rendement plus élevé augmente les coûts d'exploitation.</fr>
-			<es>Mayor productividad = mayores costes operativos.</es>
-			<ru>При увеличении производительности вырастут затраты на обслуживание производства.</ru>
+        <text name="productivity_warning_label">
+            <en>Higher productivity increases operating costs.</en>
+            <de>Steigende Produktivität führt zu höheren Betriebskosten.</de>
+            <fr>Un rendement plus élevé augmente les coûts d'exploitation.</fr>
+            <es>Mayor productividad = mayores costes operativos.</es>
+            <ru>При увеличении производительности вырастут затраты на обслуживание производства.</ru>
+            <it>Una maggiore produttività comporta costi operativi più elevati.</it>
+            <pl>Większa wydajność = wyższe koszty eksploatacji.</pl>
         </text>
-		<text name="productivity_change_bable">
-			<en>Production Rate Settings</en>
-			<de>Leistungssteuerung</de>
-			<fr>Ajustement du rendement</fr>
-			<es>Configurar producción</es>
-			<ru>Изменение производительности</ru>
-		</text>
     </l10n>
 	
-	<extraSourceFiles>
-        <sourceFile filename="scripts/events/ProductivityChangeRequest.lua" />
-		<sourceFile filename="scripts/events/ProductivityChange.lua" />
-		<sourceFile filename="scripts/ProductionControl.lua" />
+    <extraSourceFiles>
+        <sourceFile filename="scripts/ProductionControl.lua" />
+        <sourceFile filename="scripts/events/ProductivityRequest.lua" />
+        <sourceFile filename="scripts/events/ProductivityUpdate.lua" />
     </extraSourceFiles>
 </modDesc>
