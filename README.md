@@ -36,19 +36,3 @@ Now your factories can operate in three 8-hour shifts.
 
 Contributions, testing feedback, and suggestions are welcome!  
 Feel free to open issues or pull requests.
-
-## 📄 License
-
-This project is licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
-
-You are free to:
-- Use
-- Modify
-- Share
-
-As long as you:
-- Give credit to the original author: **Temmmych**
-- Don’t use it for commercial purposes
-- Distribute any modified versions under the same license
-
-Project link: [https://github.com/Temmmych/FS25_ProductionControl](https://github.com/Temmmych/FS25_ProductionControl)
