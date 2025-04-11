@@ -12,7 +12,7 @@ Now your factories can operate in three 8-hour shifts.
 
 ## 📁 Installation
 
-1. Download the latest release from the [Releases](https://github.com/Temmmych/FS25_ProductionControl/releases) page or [direct link](https://github.com/Temmmych/FS25_ProductionControl/releases/download/v0.0.0.6/FS25_ProductionControl.zip).
+1. Download the latest release from the [Releases](https://github.com/Temmmych/FS25_ProductionControl/releases) page or [direct link](https://github.com/Temmmych/FS25_ProductionControl/releases/download/v1.0.0.0/FS25_ProductionControl.zip).
 2. Place the `.zip` file into your mod folder (Example: `Documents/My Games/FarmingSimulator2025/mods`).
 3. Enable the mod in the game.
 
@@ -22,13 +22,17 @@ Now your factories can operate in three 8-hour shifts.
 ![Production Control](_screenshots/3.png)<br /><br />
 ![Production Control](_screenshots/4.png)<br /><br />
 
+## 🤝 Special Thanks
+
+Thanks to the [Katiuzh community](https://www.youtube.com/@katiuzh) for their support during the development of the mod
+
 ## 🛠 Development & Debugging
 
 - Written in **Lua**
 - Tested in both singleplayer and multiplayer
 - Uses in-game console output and `log.txt` for debugging
 
-## 🤝 Contributions
+## 💡Contributions
 
 Contributions, testing feedback, and suggestions are welcome!  
 Feel free to open issues or pull requests.
@@ -48,5 +52,3 @@ As long as you:
 - Distribute any modified versions under the same license
 
 Project link: [https://github.com/Temmmych/FS25_ProductionControl](https://github.com/Temmmych/FS25_ProductionControl)
-
-© 2025 [Temmmych](https://github.com/Temmmych)
