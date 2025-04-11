@@ -24,7 +24,7 @@ Now your factories can operate in three 8-hour shifts.
 
 ## 🤝 Special Thanks
 
-Thanks to the [Katiuzh community](https://www.youtube.com/@katiuzh) for their support during the development of the mod
+- Thanks to the [Katiuzh community](https://www.youtube.com/@katiuzh) for their support during the development of the mod
 
 ## 🛠 Development & Debugging
 
