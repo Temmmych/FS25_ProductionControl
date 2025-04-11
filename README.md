@@ -20,7 +20,7 @@ Now your factories can operate in three 8-hour shifts.
 ![Production Control](_screenshots/1.png)<br /><br />
 ![Production Control](_screenshots/2.png)<br /><br />
 ![Production Control](_screenshots/3.png)<br /><br />
-![Production Control](_screenshots/4.png)<br /><br />
+![Production Control](_screenshots/4.png)<br />
 
 ## 🤝 Special Thanks
 
