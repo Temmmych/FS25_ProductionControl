@@ -124,13 +124,13 @@ function ProductionControl:updateMenuButtons(superFunc)
         and ownerFarmId == g_currentMission:getFarmId()
         and g_currentMission:getHasPlayerPermission(Farm.PERMISSION.EDIT_FARM, g_currentMission.player) then
         local focusedElement = FocusManager:getFocusedElement()
+        
         if focusedElement ~= nil and focusedElement.endClipperElementName == "endClipperProducts" then
             local productionPointId = productionPoint.id
-            table.insert(self.menuButtonInfo, {
-            inputAction = InputAction.MENU_EXTRA_1,
-            text = g_i18n:getText("productivity_button_label") .. " " .. production[PCP .. "productivity"] .. "%",
-            callback = function()
-
+            local button = g_inGameMenu.productionControl
+            button:setText(g_i18n:getText("productivity_button_label") .. " " .. production[PCP .. "productivity"] .. "%")
+            button.visible = true
+            button.onClickCallback = function()
                 local diagOptionsSelected = 3
                 local diagOptions = {}
                 for i, value in ipairs(ProductionControl.productivityOptions) do
@@ -167,7 +167,6 @@ function ProductionControl:updateMenuButtons(superFunc)
                         end
                     end,
                 }
-
                 OptionDialog.createFromExistingGui({
                     optionTitle = dialogArguments.title,
                     optionText = dialogArguments.text,
@@ -187,7 +186,10 @@ function ProductionControl:updateMenuButtons(superFunc)
                 end
 
             end
-            })
+        else 
+            if g_inGameMenu.productionControl ~= nil then
+                g_inGameMenu.productionControl.visible = false
+            end
         end
 
         self:setMenuButtonInfoDirty()
@@ -206,6 +208,19 @@ function ProductionControl:updateProductionLists()
             end
         end
     end
+end
+
+function ProductionControl:productionPointSaveToXMLFile(xmlFile, key, usedModNames)
+    if debug > 0 then print("-- ProductionControl:productionPointSaveToXMLFile()") end
+    local uniqueId = self.owningPlaceable.uniqueId
+    local _products = {}
+    _products.uniqueId = uniqueId
+    _products.products = {}
+    for i = 1, #self.productions do
+        table.insert(_products.products, {productivity = self.productions[i][PCP .. "productivity"], id = self.productions[i].id})
+    end
+
+    table.insert(ProductionControl._productions, _products)
 end
 
 function ProductionControl:writeStream(streamId, connection)
@@ -238,19 +253,6 @@ function ProductionControl:readStream(streamId, connection)
             end
         end
     end
-end
-
-function ProductionControl:productionPointSaveToXMLFile(xmlFile, key, usedModNames)
-    if debug > 0 then print("-- ProductionControl:productionPointSaveToXMLFile()") end
-    local uniqueId = self.owningPlaceable.uniqueId
-    local _products = {}
-    _products.uniqueId = uniqueId
-    _products.products = {}
-    for i = 1, #self.productions do
-        table.insert(_products.products, {productivity = self.productions[i][PCP .. "productivity"], id = self.productions[i].id})
-    end
-
-    table.insert(ProductionControl._productions, _products)
 end
 
 function ProductionControl.SaveSettings()
@@ -323,6 +325,24 @@ function ProductionControl:LoadSettings()
     end
 end
 
+function ProductionControl:onFrameOpen(frameMenu)
+    local menuContainer = g_inGameMenu.menuButton[1].parent
+    local menuButton = g_inGameMenu.menuButton[1]
+    if g_inGameMenu.productionControl == nil then
+        g_inGameMenu.productionControl = menuButton:clone(frameMenu)
+        g_inGameMenu.productionControl:setInputAction("MENU_EXTRA_1")
+        g_inGameMenu.productionControl.visible = false
+    end
+
+    menuContainer:addElement(g_inGameMenu.productionControl)
+    menuContainer:invalidateLayout()
+end
+
+function ProductionControl:onFrameClose()
+    if g_inGameMenu.productionControl == nil then return end
+    g_inGameMenu.productionControl.visible = false
+end
+
 function ProductionControl.init()
     if debug > 0 then print("-- " .. modName .. " v. " .. version) end
     Mission00.load = Utils.appendedFunction(Mission00.load, ProductionControl.LoadSettings)
@@ -333,6 +353,8 @@ function ProductionControl.init()
     ProductionPoint.readStream = Utils.appendedFunction(ProductionPoint.readStream, ProductionControl.readStream)
     InGameMenuProductionFrame.updateMenuButtons = Utils.appendedFunction(InGameMenuProductionFrame.updateMenuButtons, ProductionControl.updateMenuButtons)
     InGameMenuProductionFrame.updateProductionLists =  Utils.appendedFunction(InGameMenuProductionFrame.updateProductionLists, ProductionControl.updateProductionLists)
+    InGameMenuProductionFrame.onFrameOpen = Utils.appendedFunction(InGameMenuProductionFrame.onFrameOpen, ProductionControl.onFrameOpen)
+    InGameMenuProductionFrame.onFrameClose = Utils.appendedFunction(InGameMenuProductionFrame.onFrameClose, ProductionControl.onFrameClose)
 end
 
 ProductionControl.init()

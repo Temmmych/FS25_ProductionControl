@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
-<modDesc descVersion="96">
+<modDesc descVersion="99">
     <author>Temmmych</author>
-    <version>1.0.0.0</version>
+    <version>1.0.0.1</version>
 	
     <title>
         <en>Production Control</en>
@@ -16,7 +16,10 @@ This mod allows you to increase or decrease the speed of any production. The max
 - Supports singleplayer and multiplayer
 - In multiplayer, only the farm manager can change the production speed
 
-Optimize your production to suit your gameplay!]]></en>
+Optimize your production to suit your gameplay!
+
+Changelog 1.0.0.1:
+- UI fixed for better mod compatibility]]></en>
         <de><![CDATA[Steuern Sie die Produktionsgeschwindigkeit — von 50 % bis 300 %.
 Mit diesem Mod können Sie die Geschwindigkeit jeder Produktion erhöhen oder verringern. Die maximale Beschleunigung entspricht drei 8-Stunden-Schichten.
 
@@ -25,7 +28,10 @@ Mit diesem Mod können Sie die Geschwindigkeit jeder Produktion erhöhen oder ve
 - Unterstützt Einzelspieler- und Mehrspielermodus
 - Im Mehrspielermodus kann nur der Farm-Manager die Produktionsgeschwindigkeit ändern
 
-Passen Sie Ihre Produktion Ihrem Spielstil an!]]></de>
+Passen Sie Ihre Produktion Ihrem Spielstil an!
+
+Changelog 1.0.0.1:
+- UI für bessere Mod-Kompatibilität behoben]]></de>
         <fr><![CDATA[Contrôlez la vitesse de production — de 50 % à 300 %.
 Ce mod permet d’augmenter ou de réduire la vitesse de n’importe quelle production. L’accélération maximale correspond à trois équipes de 8 heures.
 
@@ -34,7 +40,10 @@ Ce mod permet d’augmenter ou de réduire la vitesse de n’importe quelle prod
 - Compatible avec les modes solo et multijoueur
 - En multijoueur, seul le gestionnaire de ferme peut modifier la vitesse de production
 
-Adaptez vos chaînes de production à vos besoins !]]></fr>
+Adaptez vos chaînes de production à vos besoins !
+
+Changelog 1.0.0.1:
+- Correction de l’interface pour une meilleure compatibilité avec les mods]]></fr>
         <es><![CDATA[Controla la velocidad de producción — del 50 % al 300 %.
 Este mod te permite aumentar o disminuir la velocidad de cualquier instalación de producción. El aumento máximo equivale a tres turnos de 8 horas.
 
@@ -43,7 +52,10 @@ Este mod te permite aumentar o disminuir la velocidad de cualquier instalación 
 - Compatible con los modos un jugador y multijugador
 - En multijugador, solo el administrador de la granja puede modificar la velocidad de producción
 
-¡Adapta la producción a tu estilo de juego!]]></es>
+¡Adapta la producción a tu estilo de juego!
+
+Changelog 1.0.0.1:
+- Corregida la interfaz para mejorar la compatibilidad con otros mods]]></es>
         <ru><![CDATA[Управляйте скоростью производств — от 50% до 300%.
 С помощью этого мода вы можете увеличивать или уменьшать скорость работы любого производства. Максимальное ускорение эквивалентно трём сменам по 8 часов.
 
@@ -52,7 +64,10 @@ Este mod te permite aumentar o disminuir la velocidad de cualquier instalación 
 - Поддержка одиночной игры и мультиплеера
 - В мультиплеере изменять производительность может только управляющий фермой
 
-Настройте производственные процессы под свои задачи!]]></ru>
+Настройте производственные процессы под свои задачи!
+
+Changelog 1.0.0.1:
+- Исправлен пользовательский интерфейс для лучшей совместимости с модами]]></ru>
         <it><![CDATA[Controlla la velocità di produzione — dal 50% al 300%.
 Questo mod consente di aumentare o ridurre la velocità di qualsiasi produzione. L'accelerazione massima simula tre turni di lavoro da 8 ore.
 
@@ -61,7 +76,10 @@ Questo mod consente di aumentare o ridurre la velocità di qualsiasi produzione.
 - Compatibile con giocatore singolo e multiplayer
 - In multiplayer, solo il gestore della fattoria può modificare la velocità di produzione
 
-Adatta la produzione al tuo stile di gioco!]]></it>
+Adatta la produzione al tuo stile di gioco!
+
+Changelog 1.0.0.1:
+- Corretta l’interfaccia per una migliore compatibilità con le mod]]></it>
         <pl><![CDATA[Kontroluj prędkość produkcji — od 50% do 300%.
 Ten mod pozwala zwiększyć lub zmniejszyć szybkość dowolnej produkcji. Maksymalne przyspieszenie odpowiada trzem 8-godzinnym zmianom.
 
@@ -70,7 +88,10 @@ Ten mod pozwala zwiększyć lub zmniejszyć szybkość dowolnej produkcji. Maksy
 - Obsługuje tryb jednoosobowy i wieloosobowy
 - W trybie wieloosobowym tylko kierownik farmy może zmieniać prędkość produkcji
 
-Dostosuj produkcję do swojego stylu gry!]]></pl>
+Dostosuj produkcję do swojego stylu gry!
+
+Changelog 1.0.0.1:
+- Naprawiono interfejs dla lepszej kompatybilności z modami]]></pl>
     </description>
 
     <multiplayer supported="true" />
