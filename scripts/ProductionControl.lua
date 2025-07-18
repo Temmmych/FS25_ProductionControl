@@ -1,7 +1,7 @@
 --[[
 -- @Name: Production Control
--- @Version: 1.0.0.0
--- @Author: Temmmych
+-- @Version: 1.0.0.2
+-- @Author: Temmmych, Martin3825
 -- @Contacts: https://github.com/Temmmych/FS25_ProductionControl
 --]]
 
@@ -48,16 +48,14 @@ end
 function ProductionControl.CalculateAllPerMonth(production)
     if debug > 0 then print("-- ProductionControl.CalculateAllPerMonth()") end
     if production[PCP .. "productivity"] > ProductionControl.productivityOptions[#ProductionControl.productivityOptions] 
-        or production[PCP .. "productivity"] < ProductionControl.productivityOptions[1] then production[PCP .. "productivity"] = 100 end
-    local daysPerPeriod = 1
-    if g_currentMission.environment ~= nil and g_currentMission.environment.daysPerPeriod ~= nil then
-        daysPerPeriod = g_currentMission.environment.daysPerPeriod
+            or production[PCP .. "productivity"] < ProductionControl.productivityOptions[1] then 
+        production[PCP .. "productivity"] = 100 
     end
     production.cyclesPerMonth = production.cyclesPerMonth * (production[PCP .. "productivity"] / 100)
-    production.cyclesPerHour = production.cyclesPerMonth / (24 * daysPerPeriod)
+    production.cyclesPerHour = production.cyclesPerMonth / 24
     production.cyclesPerMinute = production.cyclesPerHour / 60
     production.costsPerActiveMonth = production.costsPerActiveMonth * (production[PCP .. "productivity"] / 100)
-    production.costsPerActiveHour = production.costsPerActiveMonth / (24 * daysPerPeriod)
+    production.costsPerActiveHour = production.costsPerActiveMonth / 24
     production.costsPerActiveMinute = production.costsPerActiveHour / 60
 end
 
@@ -77,7 +75,7 @@ function ProductionControl:productionPointRegister()
 end
 
 function ProductionControl.RecalculateProductionPointFromOnServer(__uniqueId, productionId, productivity)
-    if debug > 0 then printf("--// ProductionControl.RecalculateProductionPointFromOnServer(%s, %s, %s)", __uniqueId, productionId, productivity) end
+    if debug > 0 then printf("-- ProductionControl.RecalculateProductionPointFromOnServer(%s, %s, %s)", __uniqueId, productionId, productivity) end
     if g_currentMission.productionChainManager ~= nil then
         local productionPoints = g_currentMission.productionChainManager.productionPoints
         for _, productionPoint in pairs(productionPoints) do
@@ -96,10 +94,7 @@ function ProductionControl.RecalculateProductionPointFromOnServer(__uniqueId, pr
                 end
             end
         end
-    else
-        if debug > 0 then print("-- Прозиводства не найдены!") end
     end
-    if debug > 0 then print("-- Продукция не найдена!") end
     return false
 end
 
@@ -210,8 +205,8 @@ function ProductionControl:updateProductionLists()
     end
 end
 
-function ProductionControl:productionPointSaveToXMLFile(xmlFile, key, usedModNames)
-    if debug > 0 then print("-- ProductionControl:productionPointSaveToXMLFile()") end
+function ProductionControl:productionPointPrepareForSave(xmlFile, key, usedModNames)
+    if debug > 0 then print("-- ProductionControl:productionPointPrepareForSave()") end
     local uniqueId = self.owningPlaceable.uniqueId
     local _products = {}
     _products.uniqueId = uniqueId
@@ -223,40 +218,8 @@ function ProductionControl:productionPointSaveToXMLFile(xmlFile, key, usedModNam
     table.insert(ProductionControl._productions, _products)
 end
 
-function ProductionControl:writeStream(streamId, connection)
-    if debug > 0 then printf("-- ProducntionControl:writeStream(%s, %s)", streamId, connection) end
-    streamWriteString(streamId, self[PCP .. "uniqueId"])
-    streamWriteInt32(streamId, #self.productions)
-    for _, prod in ipairs(self.productions) do
-        streamWriteString(streamId, prod.id)
-        streamWriteInt32(streamId, prod[PCP .. "productivity"])
-        streamWriteInt32(streamId, prod[PCP .. "baseCyclesPerMonth"])
-        streamWriteInt32(streamId, prod[PCP .. "baseCostsPerActiveMonth"])
-    end
-end
-
-function ProductionControl:readStream(streamId, connection)
-    if debug > 0 then print("-- ProducntionControl:readStream(streamId, connection)") end
-    self[PCP .. "uniqueId"] = streamReadString(streamId)
-    local count = streamReadInt32(streamId)
-    for i = 1, count do
-        local id = streamReadString(streamId)
-        local productivity = streamReadInt32(streamId)
-        local __baseCyclesPerMonth = streamReadInt32(streamId)
-        local __baseCostsPerActiveMonth = streamReadInt32(streamId)
-        for i = 1, #self.productions do
-            if self.productions[i].id == id then
-                self.productions[i][PCP .. "productivity"] = productivity
-                self.productions[i].cyclesPerMonth = __baseCyclesPerMonth
-                self.productions[i].costsPerActiveMonth = __baseCostsPerActiveMonth
-                ProductionControl.CalculateAllPerMonth(self.productions[i])
-            end
-        end
-    end
-end
-
-function ProductionControl.SaveSettings()
-    if debug > 0 then print("-- ProductionControl.saveSettings()") end
+function ProductionControl.saveToXMLFile()
+    if debug > 0 then print("-- ProductionControl.saveToXMLFile()") end
     if g_server == nil then return end
     if g_currentMission.missionInfo.savegameDirectory == nil then  return end
     if next (ProductionControl._productions) == nil then return end
@@ -325,6 +288,38 @@ function ProductionControl:LoadSettings()
     end
 end
 
+function ProductionControl:writeStream(streamId, connection)
+    if debug > 0 then printf("-- ProducntionControl:writeStream(%s, %s)", streamId, connection) end
+    streamWriteString(streamId, self[PCP .. "uniqueId"])
+    streamWriteInt32(streamId, #self.productions)
+    for _, prod in ipairs(self.productions) do
+        streamWriteString(streamId, prod.id)
+        streamWriteInt32(streamId, prod[PCP .. "productivity"])
+        streamWriteInt32(streamId, prod[PCP .. "baseCyclesPerMonth"])
+        streamWriteInt32(streamId, prod[PCP .. "baseCostsPerActiveMonth"])
+    end
+end
+
+function ProductionControl:readStream(streamId, connection)
+    if debug > 0 then print("-- ProducntionControl:readStream(streamId, connection)") end
+    self[PCP .. "uniqueId"] = streamReadString(streamId)
+    local count = streamReadInt32(streamId)
+    for i = 1, count do
+        local id = streamReadString(streamId)
+        local productivity = streamReadInt32(streamId)
+        local __baseCyclesPerMonth = streamReadInt32(streamId)
+        local __baseCostsPerActiveMonth = streamReadInt32(streamId)
+        for i = 1, #self.productions do
+            if self.productions[i].id == id then
+                self.productions[i][PCP .. "productivity"] = productivity
+                self.productions[i].cyclesPerMonth = __baseCyclesPerMonth
+                self.productions[i].costsPerActiveMonth = __baseCostsPerActiveMonth
+                ProductionControl.CalculateAllPerMonth(self.productions[i])
+            end
+        end
+    end
+end
+
 function ProductionControl:onFrameOpen(frameMenu)
     local menuContainer = g_inGameMenu.menuButton[1].parent
     local menuButton = g_inGameMenu.menuButton[1]
@@ -346,9 +341,9 @@ end
 function ProductionControl.init()
     if debug > 0 then print("-- " .. modName .. " v. " .. version) end
     Mission00.load = Utils.appendedFunction(Mission00.load, ProductionControl.LoadSettings)
-    FSCareerMissionInfo.saveToXMLFile = Utils.appendedFunction(FSCareerMissionInfo.saveToXMLFile, ProductionControl.SaveSettings)
     ProductionPoint.register =  Utils.appendedFunction(ProductionPoint.register, ProductionControl.productionPointRegister)
-    ProductionPoint.saveToXMLFile =  Utils.appendedFunction(ProductionPoint.saveToXMLFile, ProductionControl.productionPointSaveToXMLFile)
+    ProductionPoint.saveToXMLFile =  Utils.appendedFunction(ProductionPoint.saveToXMLFile, ProductionControl.productionPointPrepareForSave)
+    FSCareerMissionInfo.saveToXMLFile = Utils.appendedFunction(FSCareerMissionInfo.saveToXMLFile, ProductionControl.saveToXMLFile)
     ProductionPoint.writeStream = Utils.appendedFunction(ProductionPoint.writeStream, ProductionControl.writeStream)
     ProductionPoint.readStream = Utils.appendedFunction(ProductionPoint.readStream, ProductionControl.readStream)
     InGameMenuProductionFrame.updateMenuButtons = Utils.appendedFunction(InGameMenuProductionFrame.updateMenuButtons, ProductionControl.updateMenuButtons)
